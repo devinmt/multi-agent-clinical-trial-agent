@@ -1,0 +1,143 @@
+{
+    "project_name": "medpace_trial_ai",
+    "version": "1.0.0",
+    "description": "Multi-agent system for clinical trials analysis",
+    "python_version": "3.11",
+    "dockerfile_lines": [],
+    "env": "./.env",
+    "dependencies": [
+      "langchain-core",
+      "langchain-openai",
+      "langgraph",
+      "pydantic",
+      "typing-extensions"
+    ],
+    "agents": {
+      "protocol_analyzer": "./agents/protocol_agent.py:ProtocolAgent",
+      "safety_monitor": "./agents/safety_agent.py:SafetyAgent", 
+      "quality_monitor": "./agents/quality_agent.py:QualityAgent",
+      "recommendations": "./agents/recommendations_agent.py:RecommendationsAgent",
+      "report_generator": "./agents/report_generator.py:ReportGenerator"
+    },
+    "models": {
+      "clinical_document": "./models/documents.py:ClinicalDocument",
+      "protocol_analysis": "./models/analysis.py:ProtocolAnalysis",
+      "safety_alert": "./models/alerts.py:SafetyAlert",
+      "quality_issue": "./models/quality.py:DataQualityIssue",
+      "trial_state": "./models/state.py:TrialState"
+    },
+    "graphs": {
+      "main_graph": "./graphs/trial_graph.py:create_trial_graph"
+    },
+    "configuration": {
+      "llm": {
+        "model": "gpt-4",
+        "temperature": 0
+      },
+      "system": {
+        "max_documents": 100,
+        "max_retries": 3,
+        "timeout": 300
+      },
+      "paths": {
+        "data_dir": "./data",
+        "models_dir": "./models",
+        "output_dir": "./output"
+      }
+    },
+    "entry_points": {
+      "cli": "medpace_trial_ai.cli:main",
+      "api": "medpace_trial_ai.api:app"
+    },
+    "project_structure": {
+      "agents": {
+        "protocol_agent.py": "Protocol analysis agent implementation",
+        "safety_agent.py": "Safety monitoring agent implementation",
+        "quality_agent.py": "Data quality monitoring agent implementation",
+        "recommendations_agent.py": "Recommendations generation agent",
+        "report_generator.py": "Final report generation agent"
+      },
+      "models": {
+        "documents.py": "Clinical document models",
+        "analysis.py": "Analysis result models",
+        "alerts.py": "Safety alert models",
+        "quality.py": "Data quality models",
+        "state.py": "State management models"
+      },
+      "graphs": {
+        "trial_graph.py": "Main trial analysis graph implementation"
+      },
+      "utils": {
+        "logging.py": "Logging utilities",
+        "validation.py": "Data validation utilities",
+        "config.py": "Configuration management"
+      }
+    },
+    "features": {
+      "protocol_analysis": {
+        "enabled": true,
+        "capabilities": [
+          "Key criteria extraction",
+          "Inclusion/exclusion analysis",
+          "Endpoint identification",
+          "Safety requirement analysis"
+        ]
+      },
+      "safety_monitoring": {
+        "enabled": true,
+        "capabilities": [
+          "Real-time safety alerts",
+          "Severity assessment",
+          "Recommendation generation",
+          "Protocol criteria linking"
+        ]
+      },
+      "quality_monitoring": {
+        "enabled": true,
+        "capabilities": [
+          "Data quality assessment",
+          "Issue categorization",
+          "Impact analysis",
+          "Resolution suggestions"
+        ]
+      },
+      "recommendations": {
+        "enabled": true,
+        "capabilities": [
+          "Strategic insights",
+          "Process optimization",
+          "Risk mitigation",
+          "Efficiency improvements"
+        ]
+      },
+      "reporting": {
+        "enabled": true,
+        "capabilities": [
+          "Comprehensive analysis",
+          "Multi-source integration",
+          "Strategic recommendations",
+          "Actionable insights"
+        ]
+      }
+    },
+    "api_endpoints": {
+      "/analyze": {
+        "method": "POST",
+        "description": "Analyze clinical trial documents",
+        "input": "List[ClinicalDocument]",
+        "output": "TrialAnalysis"
+      },
+      "/monitor": {
+        "method": "POST",
+        "description": "Real-time trial monitoring",
+        "input": "TrialMonitoringRequest",
+        "output": "MonitoringResults"
+      },
+      "/report": {
+        "method": "GET",
+        "description": "Generate trial analysis report",
+        "input": "ReportRequest",
+        "output": "AnalysisReport"
+      }
+    }
+  }
