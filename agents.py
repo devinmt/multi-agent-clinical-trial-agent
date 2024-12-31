@@ -2,7 +2,7 @@ from typing import List
 from pydantic import BaseModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-
+import os
 from models import (
     TrialState,
     ProtocolAnalysis,
@@ -11,7 +11,12 @@ from models import (
 )
 
 # Initialize LLM
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+llm = ChatOpenAI(
+    model="gpt-4o-mini",  
+    temperature=0,
+    api_key=os.getenv("OPENAI_API_KEY")
+)
+
 
 # Define structured output models for lists
 class SafetyAlertList(BaseModel):

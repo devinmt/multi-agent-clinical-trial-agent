@@ -6,7 +6,13 @@ import time
 import chardet
 from models import ClinicalDocument
 from main import analyze_clinical_trial
+import os
 
+# Set up environment variables from Streamlit secrets
+if 'openai' in st.secrets:
+    os.environ['OPENAI_API_KEY'] = st.secrets['openai']['OPENAI_API_KEY']
+else:
+    st.error("OpenAI API key not found in secrets. Please add it to continue.")
 # Page config
 st.set_page_config(
     page_title="Clinical Trials AI Assistant",
