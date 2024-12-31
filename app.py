@@ -1,24 +1,24 @@
+import os
 import streamlit as st
-import json
+from dotenv import load_dotenv
+
+# Initialize environment variables first
+load_dotenv()
+
+# Set OpenAI API key from Streamlit secrets
+if 'OPENAI_API_KEY' in st.secrets:
+    os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+elif not os.getenv('OPENAI_API_KEY'):
+    st.error('OpenAI API key not found! Please set it in your Streamlit secrets.')
+    st.stop()
+
+# Now import the rest of the dependencies
 import pandas as pd
 from typing import List
 import time
 import chardet
 from models import ClinicalDocument
 from main import analyze_clinical_trial
-import os
-
-# Set up environment variables from Streamlit secrets
-if 'openai' in st.secrets:
-    os.environ['OPENAI_API_KEY'] = st.secrets['openai']['OPENAI_API_KEY']
-else:
-    st.error("OpenAI API key not found in secrets. Please add it to continue.")
-# Page config
-st.set_page_config(
-    page_title="Clinical Trials AI Assistant",
-    page_icon="🏥",
-    layout="wide"
-)
 
 # Custom CSS
 st.markdown("""
